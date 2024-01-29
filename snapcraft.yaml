@@ -74,10 +74,22 @@ parts:
       - usr/share/dbus-1
       - usr/share/netplan
       - usr/share/python3
+  # cloud-init:
+  #   plugin: dump
+  #   source: cloud-init
+  #   source-type: local
+
+  # restore cloud-init
   cloud-init:
-    plugin: dump
-    source: cloud-init
-    source-type: local
+    after:
+      - netplan
+    plugin: nil
+    stage-packages:
+      - cloud-init
+    stage:
+      - usr/bin/pdb3*
+      - usr/bin/py*
+      - usr/lib/python3*
   bootstrap:
     after:
       - base
@@ -109,8 +121,8 @@ parts:
       - -usr/lib/*/perl-base
       - -usr/lib/*/python*
       - -usr/lib/python*
-      - -usr/lib/systemd/system/cloud-*
-      - -usr/lib/systemd/system-generators/cloud-init-generator
+      # - -usr/lib/systemd/system/cloud-*
+      # - -usr/lib/systemd/system-generators/cloud-init-generator
       - -usr/lib/udev/hwdb.d
       - -usr/lib/valgrind
       # - -usr/sbin/addgroup
