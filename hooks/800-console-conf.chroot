@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+echo "Setting up console-conf"
+
+mkdir -p /usr/lib/systemd/system/getty.target.wants
+
+ln -s ../console-conf@.service \
+   /usr/lib/systemd/system/getty.target.wants/console-conf@tty1.service
